@@ -22,7 +22,7 @@ func (e *Engine) ServeHTTP(
 ) {
 	for _, route := range e.routes {
 		if route.Method == r.Method &&
-			route.Path == r.URL.Path {
+			matchPath(route.Path, r.URL.Path) {
 			e.writeResponse(w, route.Response)
 			return
 		}
