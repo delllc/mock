@@ -1,0 +1,26 @@
+{
+    "version": "1",
+    "server": {
+        "host": "127.0.0.1",
+        "port": 3001
+    },
+    "routes": [
+        {
+            "method": "GET",
+            "path": "/api/products",
+            "response": {
+                "status": 200,
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "body": [
+                    {
+                        "id": 1,
+                        "name": "MacBook",
+                        "price": 1999
+                    }
+                ]
+            }
+        }
+    ]
+}
