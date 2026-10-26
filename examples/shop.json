@@ -21,6 +21,19 @@
                     }
                 ]
             }
+        },
+        {
+            "method": "GET",
+            "path": "/api/products/:id",
+            "response": {
+                "status": 200,
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "body": {
+                    "message": "Product found"
+                }
+            }
         }
     ]
 }
