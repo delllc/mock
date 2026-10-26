@@ -2,9 +2,11 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 	"os"
 
 	"mock-platform/internal/config"
+	"mock-platform/internal/mockengine"
 )
 
 func main() {
@@ -14,10 +16,20 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Printf("Server: %s:%d\n", cfg.Server.Host, cfg.Server.Port)
-	fmt.Printf("Routes: %d\n", len(cfg.Routes))
+	engine := mockengine.New(cfg)
 
-	for _, route := range cfg.Routes {
-		fmt.Printf("%s %s\n", route.Method, route.Path)
+	addr := fmt.Sprintf("%s:%d", cfg.Server.Host, cfg.Server.Port)
+
+	server := &http.Server{
+		Addr:    addr,
+		Handler: engine,
+	}
+
+	fmt.Printf("Mock server listening on http://%s\n", addr)
+
+	if err := server.ListenAndServe(); err != nil &&
+		err != http.ErrServerClosed {
+		fmt.Fprintf(os.Stderr, "Server error: %v\n", err)
+		os.Exit(1)
 	}
 }
